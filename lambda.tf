@@ -21,12 +21,30 @@ locals {
     viewerResponseHandler = var.viewer_response_handler != null
   }
 
+  lambda_checksum = sha1(join("", [for f in fileset("lambda-src", "*"): filesha1(f)]))
+
   archive_file_name = (
     var.lambda_code_archive_file != null
     ? var.lambda_code_archive_file
-    : "${path.root}/${var.function_name}-lambda.zip"
+    : "${path.root}/${var.function_name}-${local.lambda_checksum}-lambda.zip"
   )
 }
+
+# locals {
+  # # Hard code a list of files in the dir
+  # cfn_files = [
+  #   "lambda-src/index.js",
+  #   "lambda-src/index.js",
+  # ]
+
+  # # Get the MD5 of each file in the directory
+  # cfn_md5sums = [for f in local.cfn_files : filemd5(f)]
+
+  # # Join the MD5 sums together and take the MD5 of all of them
+  # # Effectively checksumming the pieces of the dir you care about
+  # cfn_dirchecksum = md5(join("-", local.cfn_md5sums))
+  # lambda_checksum = sha1(join("", [for f in fileset("lambda-src", "*"): filesha1(f)]))
+# }
 
 resource "random_id" "id" {
   byte_length = 8
@@ -41,6 +59,12 @@ resource "random_id" "id" {
     ]
   }
 }
+
+# data "null_data_source" "hash" {
+#   inputs {
+#     hash = "${md5(file("${path.module}/src/process.py"))}"
+#   }
+# }
 
 data "archive_file" "lambda_code" {
   depends_on  = ["random_id.id"]
