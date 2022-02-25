@@ -28,7 +28,22 @@ locals {
   )
 }
 
+resource "random_id" "id" {
+  byte_length = 8
+
+  keepers {
+    timestamp = "${timestamp()}" # force change on every execution
+  }
+
+  lifecycle {
+    ignore_changes = [
+      "keepers",
+    ]
+  }
+}
+
 data "archive_file" "lambda_code" {
+  depends_on  = ["random_id.id"]
   type        = "zip"
   output_path = local.archive_file_name
 
