@@ -31,7 +31,7 @@ locals {
 resource "random_id" "id" {
   byte_length = 8
 
-  keepers {
+  keepers = {
     timestamp = "${timestamp()}" # force change on every execution
   }
 
