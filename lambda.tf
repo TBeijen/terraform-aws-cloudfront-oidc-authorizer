@@ -56,11 +56,11 @@ resource "random_id" "id" {
     timestamp = "${timestamp()}" # force change on every execution
   }
 
-  lifecycle {
-    ignore_changes = [
-      "keepers",
-    ]
-  }
+  # lifecycle {
+  #   ignore_changes = [
+  #     "keepers",
+  #   ]
+  # }
 }
 
 # data "null_data_source" "hash" {
