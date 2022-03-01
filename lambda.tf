@@ -58,6 +58,7 @@ resource "random_id" "id" {
     checksum = local.lambda_checksum
   }
 
+  prefix = "${timestamp()}"
   # lifecycle {
   #   ignore_changes = [
   #     "keepers",
