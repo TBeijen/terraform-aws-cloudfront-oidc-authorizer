@@ -208,6 +208,7 @@ async function viewerRequestHandler(request, event) {
             authURL.searchParams.append('response_type', 'code');
             authURL.searchParams.append('client_id', config.clientId);
             authURL.searchParams.append('redirect_uri', config.redirectUri);
+            // TODO: read from config
             authURL.searchParams.append('scope', "openid");
             authURL.searchParams.append('state', JSON.stringify({uri: request.uri, querystring: request.querystring}));
 
