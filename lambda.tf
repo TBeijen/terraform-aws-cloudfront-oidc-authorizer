@@ -54,7 +54,8 @@ resource "random_id" "id" {
   byte_length = 8
 
   keepers = {
-    timestamp = "${timestamp()}" # force change on every execution
+    # timestamp = "${timestamp()}" # force change on every execution
+    checksum = local.lambda_checksum
   }
 
   # lifecycle {
