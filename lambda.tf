@@ -26,7 +26,8 @@ locals {
   archive_file_name = (
     var.lambda_code_archive_file != null
     ? var.lambda_code_archive_file
-    : "${path.root}/${var.function_name}-${local.lambda_checksum}-lambda.zip"
+    : "${path.root}/${var.function_name}-lambda.zip"
+    # : "${path.root}/${var.function_name}-${local.lambda_checksum}-lambda.zip"
     # : "${path.root}/${var.function_name}-${random_id.id.dec}-lambda.zip"
     # : "${path.cwd}/${var.function_name}-${local.lambda_checksum}-lambda.zip"
     # : "${path.cwd}/${var.function_name}-${random_id.id.dec}-lambda.zip"
